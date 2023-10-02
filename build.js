@@ -1,5 +1,9 @@
 const fs = require('fs')
-const path = require('path')
+const allFilesInTree = require('all-files-in-tree')
+const tree = require('pretty-file-tree')
 
-const packages = fs.readdirSync('./static').filter(d => !fs.statSync(path.resolve(__dirname, 'static', d)).isFile())
-fs.writeFileSync('packages.txt', packages.join('\n'))
+const files = allFilesInTree.sync('static')
+const fileTree = tree(files)
+fs.writeFileSync('packages.txt', fileTree)
+console.info(fileTree)
+console.info('Done.')
